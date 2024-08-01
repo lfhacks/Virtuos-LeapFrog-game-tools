@@ -39,6 +39,7 @@ def parseGDA(file, names, entries, outDir): #Contains the file data
                 os.makedirs(outDir+path)
             with open(outDir+path+outName, "w+b") as out:
                 out.write(data)
+
 def parseGDF(file): #Contains the filename list
     names = []
     with open(file, "rb") as gdf:
