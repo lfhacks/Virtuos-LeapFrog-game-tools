@@ -1,6 +1,8 @@
 # Virtuos-LeapFrog-game-tools
 A set of tools for researching the games made by Virtuos for the Leapster Explorer, LeapPad Explorer and LeapTV
 
+Feel free to make modifications to any of the tools seen here for your own projects so long as the said modifications aren't malicious.
+
 # Supported games
 
 - LeapFrog Kart Racing (Supercharged)
