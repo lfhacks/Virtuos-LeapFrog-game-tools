@@ -22,6 +22,8 @@ pip install numpy
 Model conversions are stored in the same folder as the model you opened. The same thing applies to texture conversions.
 
 # Model renderer screenshots
+(Please note that the jankiness is only visible in the renderer! The converted obj files don't have random extra triangles and edges everywhere.)
+
 ![image](https://github.com/user-attachments/assets/6b056fe8-2612-485d-8768-72810775495b)
 ![image](https://github.com/user-attachments/assets/cbcd1b1d-bb06-4e09-b3d8-f303e1de7e06)
 ![image](https://github.com/user-attachments/assets/31eb9aa1-8402-41c6-906a-c182c217fa1b)
