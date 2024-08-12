@@ -23,6 +23,15 @@ pip install numpy
 
 Model conversions are stored in the same folder as the model you opened. The same thing applies to texture conversions.
 
+# Model renderer controls
+Think of it like Minecraft but you can walk in whatever direction the camera is pointed in.
+
+- WASD moves the camera forward, backwards, left and right
+- Shift moves the camera down
+- Space moves the camera up
+- The mouse rotates the camera
+- Escape closes out of the renderer
+
 # Model renderer screenshots
 (Please note that the jankiness is only visible in the renderer! The converted obj files don't have random extra triangles and edges everywhere.)
 
