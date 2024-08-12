@@ -5,13 +5,8 @@ from tkinter import filedialog
 import zlib
 root = tk.Tk()
 root.withdraw()
-file = filedialog.askopenfilename()
+files = filedialog.askopenfilenames()
 root.destroy()
-
-base = os.path.basename(file).split(".")[0]
-outDir = os.getcwd()+f"/Output/{base}/"
-if os.path.exists(outDir) == False:
-    os.makedirs(outDir)
 
 def getString(file, offset): #Gets any 0 terminated string at any given offset. Useful for stuff like title info.
     string = ""
@@ -39,7 +34,6 @@ def parseGDA(file, names, entries, outDir): #Contains the file data
                 os.makedirs(outDir+path)
             with open(outDir+path+outName, "w+b") as out:
                 out.write(data)
-
 def parseGDF(file): #Contains the filename list
     names = []
     with open(file, "rb") as gdf:
@@ -63,32 +57,44 @@ def parseGDT(file): #Contains the file offsets and sizes
             size = struct.unpack("<I", gdt.read(4))[0]+29
             entries.append([size, startOffset])
     return entries
-
-with open(file, "rb") as waf:
-    magic, unknown, files = struct.unpack("<III", waf.read(12))
-    gda = False
-    for fileID in range(files):
-        letters = struct.unpack("<I", waf.read(4))[0]
-        name = waf.read(letters).decode("UTF-8")
-        unpackedSize, startOffset = struct.unpack("<II", waf.read(8))
-        nextFile = waf.tell()
-        waf.seek(startOffset)
-        totalSize = 0
-        fullData = b''
-        while totalSize < unpackedSize:
-            chunkSize = struct.unpack("<I", waf.read(4))[0]
-            data = zlib.decompress(waf.read(chunkSize))
-            totalSize += len(data)
-            fullData += data
-        with open(outDir+name, "w+b") as out:
-            out.write(fullData)
-        if "gda" in name:
-            gda = True
-        if "gdt" in name:
-            entries = parseGDT(outDir+name)
-        if "gdf" in name:
-            names = parseGDF(outDir+name)
-        waf.seek(nextFile)
+for file in files:
+    base = os.path.basename(file).split(".")[0]
+    outDir = os.getcwd()+f"/Output/{base}/"
+    if os.path.exists(outDir) == False:
+        os.makedirs(outDir)
+    with open(file, "rb") as waf:
+        magic, unknown, files = struct.unpack("<III", waf.read(12))
+        gda = False
+        for fileID in range(files):
+            outPath = ""
+            letters = struct.unpack("<I", waf.read(4))[0]
+            name = waf.read(letters).decode("UTF-8")
+            print(name)
+            path = name.split("/")
+            for folder in path:
+                if folder != path[-1]:
+                    outPath = outPath+"/"+folder+"/"
+            if os.path.exists(outDir+outPath) == False:
+                os.makedirs(outDir+outPath)
+            unpackedSize, startOffset = struct.unpack("<II", waf.read(8))
+            nextFile = waf.tell()
+            waf.seek(startOffset)
+            totalSize = 0
+            fullData = b''
+            while totalSize < unpackedSize:
+                chunkSize = struct.unpack("<I", waf.read(4))[0]
+                data = zlib.decompress(waf.read(chunkSize))
+                totalSize += len(data)
+                fullData += data
+            with open(outDir+name, "w+b") as out:
+                out.write(fullData)
+            if "gda" in name:
+                gda = True
+            if "gdt" in name:
+                entries = parseGDT(outDir+name)
+            if "gdf" in name:
+                names = parseGDF(outDir+name)
+            waf.seek(nextFile)
         
 if gda == True:
     parseGDA(outDir+"Data.gda", names, entries, outDir)
