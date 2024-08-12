@@ -19,4 +19,4 @@ pip install pygame
 
 pip install numpy
 
-Model conversions are stored in the same folder as the model you opened.
+Model conversions are stored in the same folder as the model you opened. The same thing applies to texture conversions.
