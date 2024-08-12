@@ -24,7 +24,7 @@ pip install numpy
 Model conversions are stored in the same folder as the model you opened. The same thing applies to texture conversions.
 
 # Model renderer controls
-Think of it like Minecraft but you can walk in whatever direction the camera is pointed in.
+Think of it like Minecraft fly mode but you can fly in whatever direction the camera is pointed at.
 
 - WASD moves the camera forward, backwards, left and right
 - Shift moves the camera down
