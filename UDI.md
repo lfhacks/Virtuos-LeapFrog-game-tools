@@ -19,4 +19,6 @@ The User Defined Image format is made up of 18x18 pixel tiles. The latter two ro
 
 There is also some sort of mechanism that detects if certain tiles can be substituted for an existing tile to avoid saving duplicates.
 
+The image data is compressed with zlib.
+
 [^1]: This is according to debug symbols in the main executable for Transformers Rescue Bots: Race to the Rescue (trans.so). There is a class named 'UserDefineImage' under the 'UDImage' namespace, which is referred to by the 'LoadUDI' function.
