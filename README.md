@@ -42,7 +42,7 @@ Think of it like Minecraft fly mode but you can fly in whatever direction the ca
 ![image](https://github.com/user-attachments/assets/205479e0-3da7-44b2-86ab-fc208491a237)
 
 # To-do
-- Figure out how the colors in the UDI image format work
+- Write a conversion script for the UDI format (thank you applecuckoo! You helped a ton with the header information and documentation you provided.)
 - Figure out how to tell the different versions of UDI, CAR and ZON apart so the model and texture extractors don't have to be game-specific
 - Fully reverse engineer the model format (currently, all the script does is jump to "DSPL" and parse the mesh data. The header needs to be documented.)
 - Reverse engineer the track format so course models can be ripped
