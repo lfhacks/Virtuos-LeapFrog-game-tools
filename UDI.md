@@ -9,7 +9,8 @@
 | 0x0c | 4 | File Size |
 | 0x10 | 2 | Width |
 | 0x12 | 2 | Height |
-| 0x14 | 8 | Unknown (compression if 1, no compression if 0?) |
+| 0x14 | 4 | Unknown (compression if 1, no compression if 0?) |
+| 0x18 | 4 | Unknown |
 | 0x1c | 4 | Channel Bit Rates (1 per channel, i.e. 0x05060500 for RGB565) |
 | 0x20 | 4 | Channel Order (R = 0, G = 1, B = 2, A = 3) |
 
