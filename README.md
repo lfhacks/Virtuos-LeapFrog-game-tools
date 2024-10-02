@@ -8,6 +8,7 @@ Feel free to make modifications to any of the tools seen here for your own proje
 - LeapFrog Kart Racing (Supercharged)
 - SpongeBob SquarePants: the Clam Prix
 - Transformers: Rescue Bots
+- A TON of LeapTV games (they use different formats though)
 
 # Troubleshooting 
 
