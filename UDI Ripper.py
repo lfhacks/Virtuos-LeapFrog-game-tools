@@ -2,6 +2,27 @@ import struct
 import zlib
 from PIL import Image
 
+def rgba5551_to_argb1555(rgba_data):
+    argb_data = bytearray(len(rgba_data))  # Same length since it's still 16 bits per pixel
+    for i in range(0, len(rgba_data), 2):
+        # Extract the 16-bit pixel value
+        pixel = (rgba_data[i] << 8) | rgba_data[i + 1]
+        
+        # Extract the RGBA components
+        r = (pixel >> 11) & 0x1F  # Red: bits 15:11
+        g = (pixel >> 6) & 0x1F  # Green: bits 10:6
+        b = (pixel >> 1) & 0x1F  # Blue: bits 5:1
+        a = pixel & 0x1        # Alpha: bit 0
+        
+        # Reassemble in ARGB1555 order
+        argb_pixel = (a << 15) | (r << 10) | (g << 5) | b
+        
+        # Store the ARGB1555 pixel value
+        argb_data[i] = argb_pixel >> 8
+        argb_data[i + 1] = argb_pixel & 0xFF
+    
+    return argb_data
+
 filename = (input("What is the name of your file (leave out the .udi extension): "))
 
 with open((filename + ".udi"), "rb") as file:
@@ -26,8 +47,9 @@ with open((filename + ".udi"), "rb") as file:
         rawimage.save((filename + ".png"))
         rawimage.show("UDI Parser")
     if redbits == 5 and greenbits == 5 and bluebits == 5 and alphabits == 1:
-        raise ValueError("RGBA5551 file detected - please convert manually")
-        rawimage = Image.frombytes("RGBA", (width, height), imagedata, "raw", "BGRA;15") # note - expects big endian. UDIs tend to be little-endian.
+        print("RGBA5551")
+        imagedata_swapped = rgba5551_to_argb1555(imagedata)
+        rawimage = Image.frombytes("RGBA", (width, height), imagedata_swapped, "raw", "BGRA;15") # note - expects big endian. UDIs tend to be little-endian.
         rawimage.save((filename + ".png"))
         rawimage.show("UDI Parser")
     if redbits == 5 and greenbits == 6 and bluebits == 5 and alphabits == 0:
