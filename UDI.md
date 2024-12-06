@@ -3,9 +3,7 @@
 | Offset | Size | Description |
 | ------ | ---- | ----------- |
 | 0x00 | 4 | Magic number (UDI\x00) |
-| 0x04 | 4 | Unknown |
-| 0x08 | 2 | Image Offset (always 36) |
-| 0x0a | 2 | Unknown |
+| 0x04 | 8 | Unknown |
 | 0x0c | 4 | File Size |
 | 0x10 | 2 | Width |
 | 0x12 | 2 | Height |
