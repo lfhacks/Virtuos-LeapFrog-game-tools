@@ -28,6 +28,7 @@ def rgba5551_to_argb1555(rgba_data):
 
 for files in filelist:
     with open(files, "rb") as file:
+        print(files)
         magic, unknown1, unknown2, unknown3 = struct.unpack("<4I", file.read(16))
         if magic != 4801621: # UDI\x00
             raise ValueError("Magic check failed: not a UDI file!")
@@ -36,7 +37,11 @@ for files in filelist:
         unknown4, unknown5 = struct.unpack("<2I", file.read(8))
         redbits, greenbits, bluebits, alphabits, = struct.unpack("<4B", file.read(4))
         channelmap = struct.unpack("<I", file.read(4))
-        imagedata = zlib.decompress(file.read())
+        imagedata_bytes = file.read()
+        try:
+            imagedata = zlib.decompress(imagedata_bytes)
+        except zlib.error:
+            imagedata = imagedata_bytes
         print(redbits, greenbits, bluebits, alphabits)
         if redbits == 4 and greenbits == 4 and bluebits == 4 and alphabits == 4:
             rawimage = Image.frombytes("RGBA", (width, height), imagedata, "raw", "RGBA;4B")
